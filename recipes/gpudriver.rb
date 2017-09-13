@@ -19,11 +19,11 @@ bash 'extract gpu driver' do
 end
 
 # Run GPU installer
-#bash 'run driver installer' do
-#   cwd     node[:miner][:driver_installer_dir]
-#   code    "sudo ./#{node[:miner][:driver_installer]} -y"
-#   timeout 36000
-#end
+bash 'run driver installer' do
+   cwd     node[:miner][:driver_installer_dir]
+   code    "sudo ./#{node[:miner][:driver_installer]} -y"
+   timeout 36000
+end
 
 # Set installed
 #ruby_block 'set driver as installed' do
