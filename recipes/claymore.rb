@@ -26,9 +26,9 @@ end
 
 # Place miner script
 template "#{node[:miner][:claymore_dir]}/mine.sh" do
-  user     'root'
-  group    'root'
-  source   'miner.sh.erb'
+  user     node[:team][:admin]
+  group    node[:team][:admin]
+  source   'mine.sh.erb'
   mode     '0755'
   action   :create
 end

@@ -26,8 +26,7 @@ bash 'run driver installer' do
 end
 
 # Set installed
-#ruby_block 'set driver as installed' do
-ruby_block 'set driver as downloaded' do
+ruby_block 'set driver as installed' do
   block do
       node.set[:miner][:driver_installed] = true
   end
