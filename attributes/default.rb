@@ -21,5 +21,8 @@ default[:miner][:claymore_archive] = 'claymore.tar.gz'
 default[:miner][:claymore_dir] = '/usr/local/claymore95'
 default[:miner][:claymore_executable] = "#{node[:miner][:claymore_dir]}/ethdcrminer64"
 
+# Get the hostname, drop the domain name
+default[:miner][:worker_name] = node[:fqdn].split(".")[0]
+
 # Etherium
 default[:miner][:address] = 'overrideme'
