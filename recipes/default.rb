@@ -17,3 +17,6 @@ include_recipe 'team-miner::gpudriver'
 
 # Setup Claymore
 include_recipe 'team-miner::claymore'
+
+# Configure Syslog
+include_recipe 'team-miner::syslog'
