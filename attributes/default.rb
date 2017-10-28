@@ -26,3 +26,6 @@ default[:miner][:worker_name] = node[:fqdn].split(".")[0]
 
 # Etherium
 default[:miner][:address] = 'overrideme'
+
+# Syslog
+default[:miner][:syslogsocket] = 'myhost:port'
