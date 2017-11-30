@@ -1,6 +1,6 @@
 
 # Env
-default[:miner][:packages] = ['libcurl3','screen','lm-sensors']
+default[:miner][:packages] = ['curl','libcurl3','screen','lm-sensors']
 
 # Sources
 default[:miner][:gpu_driver_source] = 'https://www2.ati.com/drivers/linux/ubuntu/amdgpu-pro-17.10-414273.tar.xz'
@@ -29,3 +29,4 @@ default[:miner][:address] = 'overrideme'
 
 # Syslog
 default[:miner][:syslogsocket] = 'myhost:port'
+default[:miner][:enablesyslog] = false
