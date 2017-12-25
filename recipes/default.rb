@@ -4,10 +4,10 @@ package node[:miner][:packages] do
 end
 
 # Make install media directory
-directory node[:miner][:instmedia] do
-  owner node[:team][:admin]
-  group node[:team][:admin]
-  mode '0755'
+directory node[:miner][:stage][:dir] do
+  owner node[:miner][:admin]
+  group node[:miner][:admin]
+  mode  node[:miner][:stage][:mode]
   recursive true
   action :create
 end

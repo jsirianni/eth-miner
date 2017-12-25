@@ -1,19 +1,19 @@
 # Place syslog conf and start or stop the service
-template "/etc/rsyslog.d/60-syslog.conf" do
+template node[:mienr][:log][:conf] do
       user     'root'
       group    'root'
-      source   '60-syslog.conf.erb'
+      source   node[:miner][:log][:template]
       mode     '0644'
       action   :create
 
-      if node[:miner][:enablesyslog] != false
-            notifies :restart, 'service[rsyslog]'
+      if node[:miner][:log][:enablesyslog] != false
+            notifies :restart, "service[#{node[:miner][:log][:service]}]"
       end
 end
 
 # Manage the syslog service
-service 'rsyslog' do
-      if node[:miner][:enablesyslog] != false
+service node[:miner][:log][:service] do
+      if node[:miner][:log][:enable] != false
             action [:enable, :start]
       else
             action [:disable, :stop]
