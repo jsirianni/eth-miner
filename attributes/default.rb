@@ -32,6 +32,7 @@ default[:miner][:claymore][:executable] = "#{node[:miner][:inst_dir]}/ethdcrmine
 default[:miner][:claymore][:mode]       = "700"
 default[:miner][:claymore][:service]      = "claymore"
 default[:miner][:claymore][:srv_template] = "claymore.service.erb"
+default[:miner][:claymore][:systend_file] = "/etc/systemd/system/claymore.service"
 default[:miner][:claymore][:pool] = "us1.ethermine.org:4444"
 default[:miner][:claymore][:gpu_alloc] = "100"
 

@@ -1,5 +1,4 @@
 # Managed by Chef
-
 [Unit]
 Description=Claymore Etherium Mining Service
 After=network.target
@@ -10,7 +9,12 @@ User=<%=node[:miner][:user]%>
 Group=<%=node[:miner][:user]%>
 RuntimeDirectory=<%=node[:miner][:claymore][:inst_dir]%>
 Environment=GPU_MAX_ALLOC_PERCENT=<%node[:miner][:claymore][:gpu_alloc]%>
-ExecStart=<%=node[:miner][:claymore][:executable]%> -epool <%=node[:miner][:claymore][:pool]%> -ewal <%=node[:miner][:address]%>.<%=node[:miner][:worker_name]%> -epsw x -mode 1 -tt 68 -allpools 1
+ExecStart=<%=node[:miner][:claymore][:executable]%> \
+      -epool <%=node[:miner][:claymore][:pool]%> \
+      -ewal <%=node[:miner][:address]%>.<%=node[:miner][:worker_name]%> \
+      -epsw x -mode 1 \
+      -tt 68 \
+      -allpools 1
 
 # restart claymore if it crashes
 Restart=on-failure
