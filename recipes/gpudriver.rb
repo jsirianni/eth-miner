@@ -7,20 +7,20 @@ return if node[:miner].attribute?(:driver_installed)
 
 # Download gpu driver
 bash 'download gpu driver' do
-  user     node[:user][:admin]
-  group    node[:user][:admin]
-  cwd      node[:miner][:stage][:dir]
-  code     "wget --referer=#{node[:miner][:amd][:source]}"
-  not_if   { ::File.exist?("#{node[:miner][:stage][:dir]}/#{node[:miner][:amd][:archive]}") }
+  user   node[:miner][:user]
+  group  node[:miner][:user]
+  cwd    node[:miner][:stage][:dir]
+  code   "wget --referer=http://support.amd.com #{node[:miner][:amd][:source]}"
+  not_if { ::File.exist?("#{node[:miner][:stage][:dir]}/#{node[:miner][:amd][:archive]}") }
 end
 
 # Extract GPU driver
 bash 'extract gpu driver' do
-  user     node[:user][:admin]
-  group    node[:user][:admin]
-  cwd      node[:miner][:stage][:dir]
-  code     "tar -xvf #{node[:miner][:amd][:archive]}"
-  not_if   { ::File.exist?("#{node[:miner][:stage][:dir]}/#{node[:miner][:amd][:version]}/#{node[:miner][:amd][:installer]}") }
+  user   node[:miner][:user]
+  group  node[:miner][:user]
+  cwd    node[:miner][:stage][:dir]
+  code   "tar -xvf #{node[:miner][:amd][:archive]}"
+  not_if { ::File.exist?("#{node[:miner][:stage][:dir]}/#{node[:miner][:amd][:version]}/#{node[:miner][:amd][:installer]}") }
 end
 
 # Run GPU installer
@@ -32,9 +32,9 @@ end
 
 # Add miner user to the video group
 group node[:miner][:amd][:group] do
-  action :modify
+  action  :modify
   members node[:miner][:user]
-  append true
+  append  true
 end
 
 # Set installed

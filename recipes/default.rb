@@ -5,18 +5,18 @@ end
 
 # Make install media directory
 directory node[:miner][:stage][:dir] do
-  owner node[:miner][:admin]
-  group node[:miner][:admin]
+  owner node[:miner][:user]
+  group node[:miner][:user]
   mode  node[:miner][:stage][:mode]
   recursive true
   action :create
 end
 
 # Setup GPU driver
-include_recipe 'team-miner::gpudriver'
+include_recipe 'eth-miner::gpudriver'
 
 # Setup Claymore
-include_recipe 'team-miner::claymore'
+include_recipe 'eth-miner::claymore'
 
 # Configure Syslog
-include_recipe 'team-miner::syslog'
+include_recipe 'eth-miner::syslog'

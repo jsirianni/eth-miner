@@ -5,8 +5,11 @@ After=network.target
 
 [Service]
 Type=simple
-User=<%=node[:miner][:user]%>
-Group=<%=node[:miner][:user]%>
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=<%node[:miner][:claymore][:log_ident]%>
+User=root
+Group=root
 RuntimeDirectory=<%=node[:miner][:claymore][:inst_dir]%>
 Environment=GPU_MAX_ALLOC_PERCENT=<%node[:miner][:claymore][:gpu_alloc]%>
 ExecStart=<%=node[:miner][:claymore][:executable]%> \
