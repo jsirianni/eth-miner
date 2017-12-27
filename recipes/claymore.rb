@@ -1,29 +1,22 @@
 # Make miner install directory
 directory node[:miner][:claymore][:inst_dir] do
-  owner     node[:miner][:user]
-  group     node[:miner][:user]
-  mode      '0700'
+  mode      '0744'
   recursive true
   action    :create
 end
 
 # Download claymore
 remote_file "#{node[:miner][:stage][:dir]}/#{node[:miner][:claymore][:archive]}" do
-  user   node[:miner][:user]
-  group  node[:miner][:user]
   source node[:miner][:claymore][:source]
   not_if { ::File.exist?("#{node[:miner][:instmedia]}/#{node[:miner][:claymore][:archive]}") }
 end
 
 # Extract claymore
 execute 'extract claymore' do
-  user    node[:miner][:user]
-  group   node[:miner][:user]
   cwd     node[:miner][:stage][:dir]
-  command "tar -xvf #{node[:miner][:claymore][:archive]} -C #{node[:miner][:claymore][:inst_dir]}"
+  command "tar -xvf #{node[:miner][:claymore][:archive]} -C #{node[:miner][:claymore][:inst_dir]} && chmod 744 /usr/local/claymore95/*"
   not_if  { ::File.exist?("#{node[:miner][:claymore][:executable]}") }
 end
-
 
 
 # Manage the claymore service

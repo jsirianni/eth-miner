@@ -1,10 +1,5 @@
 # ATTRIBUTES THAT SHOULD BE OVERRIDEN
-default[:miner][:user]    = "overrideme"
 default[:miner][:address] = "overrideme"
-
-
-# Get the hostname, drop the domain name to be compatable with claymore
-default[:miner][:worker_name] = node[:fqdn].split(".")[0]
 
 
 # Package dependencies
@@ -25,15 +20,12 @@ default[:miner][:amd][:installer] = "amdgpu-pro-install"
 default[:miner][:amd][:group]     = "video"
 
 # Claymore
-default[:miner][:claymore][:source]       = "https://github.com/nanopool/Claymore-Dual-Miner/releases/download/v9.5/Claymore.s.Dual.Ethereum.Decred_Siacoin_Lbry_Pascal.AMD.NVIDIA.GPU.Miner.v9.5.-.LINUX.tar.gz"
-default[:miner][:claymore][:archive]      = "claymore.tar.gz"
-default[:miner][:claymore][:inst_dir]     = "/usr/local/claymore95"
-default[:miner][:claymore][:executable]   = "/usr/local/claymore95/ethdcrminer64"
-default[:miner][:claymore][:mode]         = "700"
-default[:miner][:claymore][:srv_template] = "claymore.service.erb"
-default[:miner][:claymore][:pool]         = "us1.ethermine.org:4444"
-default[:miner][:claymore][:gpu_alloc]    = "100"
-default[:miner][:claymore][:log_ident]    = "claymore"
+default[:miner][:claymore][:source]     = "https://github.com/nanopool/Claymore-Dual-Miner/releases/download/v9.5/Claymore.s.Dual.Ethereum.Decred_Siacoin_Lbry_Pascal.AMD.NVIDIA.GPU.Miner.v9.5.-.LINUX.tar.gz"
+default[:miner][:claymore][:archive]    = "claymore.tar.gz"
+default[:miner][:claymore][:inst_dir]   = "/usr/local/claymore95"
+default[:miner][:claymore][:executable] = "/usr/local/claymore95/ethdcrminer64"
+default[:miner][:claymore][:pool]       = "us1.ethermine.org:4444"
+default[:miner][:claymore][:worker]     = node[:fqdn].split(".")[0]
 
 # Syslog
 default[:miner][:log][:socket]            = "myhost:port"
