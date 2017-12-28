@@ -1,6 +1,7 @@
-# team-miner
+# eth-miner cookbook
 
-Configure ETH miners with Chef.
+Configures Etherium Miner's with Chef. 
 
-At this time, the cookbook depneds on `team-base` which is currently closed source. The main issue is the reliance on
-user accounts, which could easily be changed. 
+Supported OS:
+  - Ubuntu 16.04 LTS
+  
