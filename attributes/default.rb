@@ -27,6 +27,7 @@ default[:miner][:claymore][:executable] = "/usr/local/claymore95/ethdcrminer64"
 default[:miner][:claymore][:pool]       = "us1.ethermine.org:4444"
 default[:miner][:claymore][:worker]     = node[:fqdn].split(".")[0]
 
+
 # Syslog
 default[:miner][:log][:socket]   = "myhost:port" # override this
 default[:miner][:log][:conf]     = "/etc/rsyslog.d/60-syslog.conf"
