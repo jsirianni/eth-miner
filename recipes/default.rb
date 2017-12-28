@@ -5,8 +5,6 @@ end
 
 # Make install media directory
 directory node[:miner][:stage][:dir] do
-  owner node[:miner][:user]
-  group node[:miner][:user]
   mode  node[:miner][:stage][:mode]
   recursive true
   action :create
