@@ -1,0 +1,33 @@
+# Managed by Chef. Do not edit by hand
+# Claymore must run as root in order to manage
+# GPU fan speed properly
+
+[Unit]
+Description=Claymore Etherium Mining Service
+After=network.target
+
+# Send standard out to syslog
+# Run GPU's at 100%
+# Address and worker name are pulled in via attributes
+[Service]
+Type=simple
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=<%node[:miner][:log][:ident]%>
+User=root
+Group=root
+RuntimeDirectory=<%=node[:miner][:claymore][:inst_dir]%>
+Environment=GPU_MAX_ALLOC_PERCENT=100
+ExecStart=<%=node[:miner][:claymore][:executable]%> \
+      -epool <%=node[:miner][:claymore][:pool]%> \
+      -ewal <%=node[:miner][:address]%>.<%=node[:miner][:claymore][:worker]%> \
+      -epsw x -mode 1 \
+      -tt 68 \
+      -allpools 1
+
+# restart claymore if it crashes
+Restart=on-failure
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target

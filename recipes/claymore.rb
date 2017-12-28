@@ -1,70 +1,44 @@
 # Make miner install directory
-directory node[:miner][:miner_install_dir] do
-  owner node[:team][:admin]
-  group node[:team][:admin]
-  mode '0755'
+directory node[:miner][:claymore][:inst_dir] do
+  mode      '0744'
   recursive true
-  action :create
+  action    :create
 end
 
 # Download claymore
-remote_file "#{node[:miner][:instmedia]}/#{node[:miner][:claymore_archive]}" do
-  user     node[:team][:admin]
-  group    node[:team][:admin]
-  source   node[:miner][:claymore_source]
-  not_if   { ::File.exist?("#{node[:miner][:instmedia]}/#{node[:miner][:claymore_archive]}") }
+remote_file "#{node[:miner][:stage][:dir]}/#{node[:miner][:claymore][:archive]}" do
+  source node[:miner][:claymore][:source]
+  not_if { ::File.exist?("#{node[:miner][:instmedia]}/#{node[:miner][:claymore][:archive]}") }
 end
 
 # Extract claymore
-bash 'extract claymore' do
-  user     'root'
-  group    'root'
-  cwd      node[:miner][:instmedia]
-  code     "tar -xvf #{node[:miner][:claymore_archive]} -C #{node[:miner][:claymore_dir]}"
-  not_if   { ::File.exist?("#{node[:miner][:claymore_executable]}") }
+execute 'extract claymore' do
+  cwd     node[:miner][:stage][:dir]
+  command "tar -xvf #{node[:miner][:claymore][:archive]} -C #{node[:miner][:claymore][:inst_dir]} && chmod 744 /usr/local/claymore95/*"
+  not_if  { ::File.exist?("#{node[:miner][:claymore][:executable]}") }
 end
 
-# Place miner script
-template "#{node[:miner][:claymore_dir]}/mine.sh" do
-  user     node[:team][:admin]
-  group    node[:team][:admin]
-  source   'mine.sh.erb'
-  mode     '0755'
+
+# Manage the claymore service
+# Restart systemd when unit file is updated.
+# Restart claymore service when unit file is updated (delayed)
+
+# Place claymore systemd unit file
+template '/etc/systemd/system/claymore.service' do
+  source   'claymore.service.erb'
   action   :create
+  mode     '0640'
+  notifies :run, 'execute[reload_systemd]', :immediately
 end
 
-# Set chmod on claymore executable
-bash 'chmod u+s' do
-  user  'root'
-  group 'root'
-  cwd   node[:miner][:claymore_dir]
-  code  "chmod u+s ethdcrminer64"
+# Reload systemd if template updated - restart claymore
+execute 'reload_systemd' do
+  command  'systemctl daemon-reload'
+  action   :nothing
+  notifies :restart, 'service[claymore]', :immediately
 end
 
-
-# Place miner startup script
-template "/home/#{node[:team][:admin]}/miner_launcher.sh" do
-  user     node[:team][:admin]
-  group    node[:team][:admin]
-  source   'miner_launcher.sh.erb'
-  mode     '0755'
-  action   :create
-end
-
-# Place rc.local startup script
-template '/etc/rc.local' do
-  user    'root'
-  group   'root'
-  source  'rc.local.erb'
-  mode    '0755'
-  action  :create
-end
-
-# Place .bashrc startup script
-template "#{node[:team][:admin_home]}/.bashrc" do
-  user    node[:team][:admin]
-  group   node[:team][:admin]
-  source  '.bashrc.erb'
-  mode    '0644'
-  action  :create
+# Enable and start claymore
+service 'claymore' do
+  action [:enable, :start]
 end

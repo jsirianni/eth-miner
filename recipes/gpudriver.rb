@@ -1,32 +1,36 @@
-return if node[:miner].attribute?(:driver_installed)
+# TODO #
+# - Make driver install idempotence
+# - Make user group mode idempotence
+# - Add ability to upgrade driver
+
 
 # Download gpu driver
-bash 'download gpu driver' do
-  user     node[:team][:admin]
-  group    node[:team][:admin]
-  cwd      node[:miner][:instmedia]
-  code     "wget --referer=http://support.amd.com https://www2.ati.com/drivers/linux/ubuntu/amdgpu-pro-17.10-414273.tar.xz"
-  not_if   { ::File.exist?("#{node[:miner][:instmedia]}/#{node[:miner][:driver_archive]}") }
+execute 'download_gpu_driver' do
+  cwd     node[:miner][:stage][:dir]
+  command "wget --referer=http://support.amd.com #{node[:miner][:amd][:source]}"
+  not_if  { ::File.exist?("#{node[:miner][:stage][:dir]}/#{node[:miner][:amd][:archive]}") }
 end
 
 # Extract GPU driver
-bash 'extract gpu driver' do
-  user     node[:team][:admin]
-  group    node[:team][:admin]
-  cwd      node[:miner][:instmedia]
-  code     "tar -xvf #{node[:miner][:driver_archive]}"
-  not_if   { ::File.exist?("#{node[:miner][:instmedia]}/#{node[:miner][:driver_version]}/#{node[:miner][:driver_installer]}") }
+execute 'extract_gpu_driver' do
+  cwd     node[:miner][:stage][:dir]
+  command "tar -xvf #{node[:miner][:amd][:archive]}"
+  not_if  { ::File.exist?("#{node[:miner][:stage][:dir]}/#{node[:miner][:amd][:version]}/#{node[:miner][:amd][:installer]}") }
 end
 
+
+# Do not run installed if driver is installed
+return if node[:miner].attribute?(:driver_installed)
+
 # Run GPU installer
-bash 'run driver installer' do
-   cwd     node[:miner][:driver_installer_dir]
-   code    "sudo ./#{node[:miner][:driver_installer]} -y"
+execute 'run_amd_installer' do
+   cwd     node[:miner][:amd][:src_dir]
+   command "#{node[:miner][:stage][:dir]}/#{node[:miner][:amd][:version]}/#{node[:miner][:amd][:installer]} -y"
    timeout 36000
 end
 
 # Set installed
-ruby_block 'set driver as installed' do
+ruby_block 'set_driver_as_installed' do
   block do
       node.set[:miner][:driver_installed] = true
   end

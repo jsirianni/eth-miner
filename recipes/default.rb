@@ -1,22 +1,20 @@
 # Install required packages
 package node[:miner][:packages] do
-  action :upgrade
+  action :install
 end
 
 # Make install media directory
-directory node[:miner][:instmedia] do
-  owner node[:team][:admin]
-  group node[:team][:admin]
-  mode '0755'
+directory node[:miner][:stage][:dir] do
+  mode  node[:miner][:stage][:mode]
   recursive true
   action :create
 end
 
 # Setup GPU driver
-include_recipe 'team-miner::gpudriver'
+include_recipe 'eth-miner::gpudriver'
 
 # Setup Claymore
-include_recipe 'team-miner::claymore'
+include_recipe 'eth-miner::claymore'
 
 # Configure Syslog
-include_recipe 'team-miner::syslog'
+include_recipe 'eth-miner::syslog'
