@@ -13,7 +13,7 @@ After=network.target
 Type=simple
 StandardOutput=syslog
 StandardError=syslog
-SyslogIdentifier=claymore
+SyslogIdentifier=<%node[:miner][:log][:ident]%>
 User=root
 Group=root
 RuntimeDirectory=<%=node[:miner][:claymore][:inst_dir]%>

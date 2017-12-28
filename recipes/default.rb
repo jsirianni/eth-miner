@@ -1,6 +1,6 @@
 # Install required packages
 package node[:miner][:packages] do
-  action :upgrade
+  action :install
 end
 
 # Make install media directory

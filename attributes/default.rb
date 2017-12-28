@@ -17,7 +17,7 @@ default[:miner][:amd][:version]   = "amdgpu-pro-17.10-414273"
 default[:miner][:amd][:archive]   = "amdgpu-pro-17.10-414273.tar.xz"
 default[:miner][:amd][:src_dir]   = "/tmp/instmedia/amdgpu-pro-17.10-414273"
 default[:miner][:amd][:installer] = "amdgpu-pro-install"
-default[:miner][:amd][:group]     = "video"
+
 
 # Claymore
 default[:miner][:claymore][:source]     = "https://github.com/nanopool/Claymore-Dual-Miner/releases/download/v9.5/Claymore.s.Dual.Ethereum.Decred_Siacoin_Lbry_Pascal.AMD.NVIDIA.GPU.Miner.v9.5.-.LINUX.tar.gz"
@@ -28,9 +28,7 @@ default[:miner][:claymore][:pool]       = "us1.ethermine.org:4444"
 default[:miner][:claymore][:worker]     = node[:fqdn].split(".")[0]
 
 # Syslog
-default[:miner][:log][:socket]            = "myhost:port"
-default[:miner][:log][:service]           = "rsyslog"
-default[:miner][:log][:claymore_conf]     = "/etc/rsyslog.d/claymore_log.conf"
-default[:miner][:log][:remote_conf]       = "/etc/rsyslog.d/60-syslog.conf"
-default[:miner][:log][:claymore_template] = "claymore_log.conf.erb"
-default[:miner][:log][:remote_template]   = "60-syslog.conf.erb"
+default[:miner][:log][:socket]   = "myhost:port"
+default[:miner][:log][:conf]     = "/etc/rsyslog.d/60-syslog.conf"
+default[:miner][:log][:template] = "60-syslog.conf.erb"
+default[:miner][:log][:ident]    = "claymore"
