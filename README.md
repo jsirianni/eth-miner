@@ -22,7 +22,7 @@ The cookbook will do the following:
 - Install packages `(wget, lm-sensors, rsyslog)`
 - Download and install the AMD GPU driver
 - Download and install claymore
-- Configure's claymore to run with systemd
+- Configure claymore to run with systemd
 - Configure remote logging with rsyslog (Template must be edited before use!)
 
 
