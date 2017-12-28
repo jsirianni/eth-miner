@@ -1,9 +1,9 @@
-# ATTRIBUTES THAT SHOULD BE OVERRIDEN
+# ATTRIBUTES THAT MUST BE OVERRIDEN
 default[:miner][:address] = "overrideme"
 
 
 # Package dependencies
-default[:miner][:packages] = ["wget", "curl", "libcurl3", "lm-sensors", "rsyslog"]
+default[:miner][:packages] = ["wget", "lm-sensors", "rsyslog"]
 
 
 # Staging directory for install media - override this if tmp is not okay
@@ -28,7 +28,7 @@ default[:miner][:claymore][:pool]       = "us1.ethermine.org:4444"
 default[:miner][:claymore][:worker]     = node[:fqdn].split(".")[0]
 
 # Syslog
-default[:miner][:log][:socket]   = "myhost:port"
+default[:miner][:log][:socket]   = "myhost:port" # override this
 default[:miner][:log][:conf]     = "/etc/rsyslog.d/60-syslog.conf"
 default[:miner][:log][:template] = "60-syslog.conf.erb"
 default[:miner][:log][:ident]    = "claymore"
