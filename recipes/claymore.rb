@@ -24,20 +24,21 @@ end
 # Restart claymore service when unit file is updated (delayed)
 
 # Place claymore systemd unit file
-template "/etc/systemd/system/claymore.service" do
-  source   "claymore.service.erb"
+template '/etc/systemd/system/claymore.service' do
+  source   'claymore.service.erb'
   action   :create
-  notifies :run, "execute[reload_systemd]", :immediately
+  mode     '0640'
+  notifies :run, 'execute[reload_systemd]', :immediately
 end
 
 # Reload systemd if template updated - restart claymore
 execute 'reload_systemd' do
-  command  "systemctl daemon-reload"
+  command  'systemctl daemon-reload'
   action   :nothing
-  notifies :restart, "service[claymore]", :immediately
+  notifies :restart, 'service[claymore]', :immediately
 end
 
 # Enable and start claymore
-service "claymore" do
+service 'claymore' do
   action [:enable, :start]
 end
