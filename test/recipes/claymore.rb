@@ -1,6 +1,7 @@
 claymoredir = '/usr/local/claymore95'
 claymorebin = '/usr/local/claymore95/ethdcrminer64'
 claymoreunit = '/etc/systemd/system/claymore.service'
+claymoreunitmode = '0640'
 claymoresrv = 'claymore'
 
 
@@ -17,7 +18,7 @@ end
 
 describe file(claymoreunit) do
   it { should exist }
-  its('mode') { should cmp '0640'}
+  its('mode') { should cmp claymoreunitmode}
 end
 
 

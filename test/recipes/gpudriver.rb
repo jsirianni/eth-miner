@@ -1,5 +1,6 @@
-amdinstaller = '/tmp/instmedia/amdgpu-pro-install'
+amdinstaller = '/tmp/instmedia/amdgpu-pro-17.10-414273/amdgpu-pro-install'
 checkdrivercmd = 'dpkg -l amdgpu-pro'
+
 
 describe file(amdinstaller) do
   it { should exist }
@@ -7,5 +8,5 @@ end
 
 
 describe command(checkdrivercmd) do
-  its('matcher') { should_not eq "no packages found matching amdgpu-pro\n"}
+  its('exit_status') { should eq 0 }
 end
