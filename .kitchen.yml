@@ -14,7 +14,6 @@ verifier:
 
 platforms:
   - name: ubuntu-16.04
-  - name: centos-7.3
 
 suites:
   - name: default
@@ -22,5 +21,5 @@ suites:
       - recipe[eth-miner::default]
     verifier:
       inspec_tests:
-        - test/smoke/default
+        - test/recipes
     attributes:
