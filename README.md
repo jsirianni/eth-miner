@@ -13,7 +13,7 @@ Stack:
 ## Usage
 Override the following attributes with a role.
 ```
-node[:miner][:address] = "0xA481BE575cA10e1555F6512E507b85F42509db134"
+default[:miner][:address] = "0xA481BE575cA10e1555F6512E507b85F42509db134"
 ```
 
 The cookbook will do the following:
@@ -28,7 +28,7 @@ This cookbook can be run on a schedule with `chef-client` as it is entirely
 idempotent. An attribute is set after installing the AMD driver to prevent
 future installation attempts.
 
-Changes in `node[:miner][:address]` will be pulled in automatically, triggering a
+Changes in `default[:miner][:address]` will be pulled in automatically, triggering a
 service restart. To trigger an immediate update, run `chef-client` manually or
 with an orchestration tool such as `Ansible`.
 
@@ -60,7 +60,7 @@ attributes.
 To make use of this feature now, override `default[:miner][:log][:socket]` with
 a `hostname` and `port`.
 ```
-node[:miner][:log][:socket] = 'logserver.domain:514'
+default[:miner][:log][:socket] = 'logserver.domain:514'
 ```
 
 #### Chef Spec Unit Tests
