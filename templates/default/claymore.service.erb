@@ -16,7 +16,6 @@ StandardError=syslog
 SyslogIdentifier=<%node[:miner][:log][:ident]%>
 User=root
 Group=root
-RuntimeDirectory=<%=node[:miner][:claymore][:inst_dir]%>
 Environment=GPU_MAX_ALLOC_PERCENT=100
 ExecStart=<%=node[:miner][:claymore][:executable]%> \
       -epool <%=node[:miner][:claymore][:pool]%> \
