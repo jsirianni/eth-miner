@@ -13,7 +13,14 @@ Stack:
 ## Usage
 Override the following attributes with a role.
 ```
-default[:miner][:address] = "0xA481BE575cA10e1555F6512E507b85F42509db134"
+{
+"miner": {
+    "address": "0xA481BE575cA10e1555F6512E507b85F42509db134"
+    "claymore" {
+      "pool": "us1.ethermine.org:4444    "
+    }
+  }
+}
 ```
 
 The cookbook will do the following:
