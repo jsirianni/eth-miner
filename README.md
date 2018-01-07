@@ -17,7 +17,7 @@ Override the following attributes with a role.
 "miner": {
     "address": "0xA481BE575cA10e1555F6512E507b85F42509db134"
     "claymore" {
-      "pool": "us1.ethermine.org:4444    "
+      "pool": "us1.ethermine.org:4444"
     }
   }
 }
@@ -35,11 +35,51 @@ This cookbook can be run on a schedule with `chef-client` as it is entirely
 idempotent. An attribute is set after installing the AMD driver to prevent
 future installation attempts.
 
-Changes in `default[:miner][:address]` will be pulled in automatically, triggering a
-service restart. To trigger an immediate update, run `chef-client` manually or
-with an orchestration tool such as `Ansible`.
+The miner configuration lies within a Systemd unit file for the Claymore mining service. The rendered
+unit file will look something like this:
+```
+# Managed by Chef. Do not edit by hand
+# Claymore must run as root in order to manage
+# GPU fan speed properly
 
+[Unit]
+Description=Claymore Etherium Mining Service
+After=network.target
+
+# Send standard out to syslog
+# Run GPU's at 100%
+# Address and worker name are pulled in via attributes
+[Service]
+Type=simple
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=
+User=root
+Group=root
+Environment=GPU_MAX_ALLOC_PERCENT=100
+ExecStart=/usr/local/claymore95/ethdcrminer64 \
+      -epool us1.ethermine.org:4444 \
+      -ewal 0xA481BE575cA10e187F6512E507a45F42509db139.miner-1 \
+      -epsw x -mode 1 \
+      -tt 68 \
+      -allpools 1
+
+# restart claymore if it crashes
+Restart=on-failure
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target
+```
+
+## Monitoring
 To monitor the miner activity, watch syslog with `sudo tail -F /var/log/syslog`
+
+Additional insight into your mining environment can be configured by utilizing Netdata,
+Promethious, Grafana and remote syslog.
+- https://github.com/jmadureira/netdata-cookbook
+- https://github.com/jsirianni/prometheus
+
 
 ## Testing
 #### Test Kitchen
