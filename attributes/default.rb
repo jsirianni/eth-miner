@@ -20,7 +20,7 @@ default[:miner][:amd][:installer] = "amdgpu-pro-install"
 
 
 # Claymore
-default[:miner][:claymore][:source]     = "https://github.com/nanopool/Claymore-Dual-Miner/releases/download/v9.5/Claymore.s.Dual.Ethereum.Decred_Siacoin_Lbry_Pascal.AMD.NVIDIA.GPU.Miner.v9.5.-.LINUX.tar.gz"
+default[:miner][:claymore][:source]     = "https://github.com/nanopool/Claymore-Dual-Miner/releases/download/v10.0/Claymore.s.Dual.Ethereum.Decred_Siacoin_Lbry_Pascal.AMD.NVIDIA.GPU.Miner.v10.0.-.LINUX.tar.gz"
 default[:miner][:claymore][:archive]    = "claymore.tar.gz"
 default[:miner][:claymore][:inst_dir]   = "/usr/local/claymore95"
 default[:miner][:claymore][:executable] = "/usr/local/claymore95/ethdcrminer64"
