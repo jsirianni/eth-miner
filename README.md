@@ -39,6 +39,16 @@ Changes in `default[:miner][:address]` will be pulled in automatically, triggeri
 service restart. To trigger an immediate update, run `chef-client` manually or
 with an orchestration tool such as `Ansible`.
 
+Changes in the Claymore SystemD service will trigger a Claymore restart.
+The following attributes are found in the Claymore SystemD unit file:
+```
+Path to Claymore executable
+Mining pool
+Mining address
+Worker name
+Syslog Identifier
+```
+
 To monitor the miner activity, watch syslog with `sudo tail -F /var/log/syslog`
 
 ## Testing
