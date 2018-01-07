@@ -4,6 +4,11 @@ Configures an Ethereum miner with Chef.
 Supported OS:
   - Ubuntu 16.04 LTS
 
+Supported GPU:
+  - AMD R9 300 series
+  - AMD RX 400 series
+  - AMD RX 500 series
+
 Stack:
   - Claymore: https://github.com/nanopool/Claymore-Dual-Miner/releases
   - AMD Pro Drivers
