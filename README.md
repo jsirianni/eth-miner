@@ -35,8 +35,8 @@ This cookbook can be run on a schedule with `chef-client` as it is entirely
 idempotent. An attribute is set after installing the AMD driver to prevent
 future installation attempts.
 
-A majority of the miner configuration lies within a Systemd unit file for the
-Claymore mining service. The rendered unit file will look something like this:
+The miner configuration lies within a Systemd unit file for the Claymore mining service. The rendered
+unit file will look something like this:
 ```
 # Managed by Chef. Do not edit by hand
 # Claymore must run as root in order to manage
@@ -72,7 +72,14 @@ RestartSec=30
 WantedBy=multi-user.target
 ```
 
+## Monitoring
 To monitor the miner activity, watch syslog with `sudo tail -F /var/log/syslog`
+
+Additional insight into your mining environment can be configured by utilizing Netdata,
+Promethious, Grafana and remote syslog.
+- https://github.com/jmadureira/netdata-cookbook
+- https://github.com/jsirianni/prometheus
+
 
 ## Testing
 #### Test Kitchen
