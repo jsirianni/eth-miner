@@ -17,7 +17,7 @@ Override the following attributes with a role.
 "miner": {
     "address": "0xA481BE575cA10e1555F6512E507b85F42509db134"
     "claymore" {
-      "pool": "us1.ethermine.org:4444    "
+      "pool": "us1.ethermine.org:4444"
     }
   }
 }
